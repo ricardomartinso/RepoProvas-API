@@ -7,5 +7,5 @@ export async function testsCreate(req: Request, res: Response) {
 
   await createTest(test);
 
-  return res.status(201).send("Created");
+  return res.status(201).send("created");
 }
