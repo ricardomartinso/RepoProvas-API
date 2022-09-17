@@ -12,7 +12,7 @@ export async function findById(userId: number) {
 
   if (!user) throw { type: "NotFound", message: "User not created!" };
 
-  return userId;
+  return user;
 }
 
 export async function findByEmail(email: string) {

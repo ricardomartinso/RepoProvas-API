@@ -1,8 +1,8 @@
 import { prisma } from "../config/database";
 import { CreateTest } from "../types/testTypes";
 
-export async function create(data: CreateTest): Promise<void> {
-  await prisma.test.create({
+export async function create(data: CreateTest) {
+  const test = await prisma.test.create({
     data: {
       name: data.name,
       pdfUrl: data.pdfUrl,
@@ -10,6 +10,8 @@ export async function create(data: CreateTest): Promise<void> {
       category: { connect: { id: Number(data.categoryId) } },
     },
   });
+
+  return test;
 }
 
 export async function findById(testId: number) {

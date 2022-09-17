@@ -4,8 +4,13 @@ import { CreateTest } from "../types/testTypes";
 
 export async function testsCreate(req: Request, res: Response) {
   const test: CreateTest = req.body;
+  const userId: number = res.locals.userData.id;
 
-  await createTest(test);
+  const created = await createTest(test, userId);
 
-  return res.status(201).send("created");
+  res.status(201).send(created);
+}
+
+export async function getTestsByDiscipline(req: Request, res: Response) {
+  res.status(200).send("tests");
 }

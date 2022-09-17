@@ -1,3 +1,4 @@
+import { findById } from "../repositories/authRepository";
 import {
   create,
   findCategoryId,
@@ -5,8 +6,13 @@ import {
 } from "../repositories/testsRepository";
 import { CreateTest } from "../types/testTypes";
 
-export async function createTest(test: CreateTest) {
+export async function createTest(test: CreateTest, userId: number) {
+  await findById(userId);
+
   await findCategoryId(Number(test.categoryId));
   await findTeachersDisciplineId(Number(test.teachersDisciplineId));
-  await create(test);
+
+  const createdTest = await create(test);
+
+  return createdTest;
 }

@@ -9,6 +9,7 @@ const testsRouter = Router();
 
 testsRouter.post(
   "/tests",
+  authenticateToken,
   validateSchemaMiddleware(createTestSchema),
   testsCreate
 );

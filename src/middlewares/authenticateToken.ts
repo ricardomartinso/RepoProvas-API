@@ -16,9 +16,10 @@ export default async function authenticateToken(
   try {
     const JWT_SECRET = process.env.SECRET_KEY as string;
 
-    const { userId } = jwt.verify(token, JWT_SECRET) as { userId: number };
+    const { userData } = jwt.verify(token, JWT_SECRET) as { userData: object };
+
     //service que vai buscar usuario e verificar se existe
-    res.locals.userId = userId;
+    res.locals.userData = userData;
   } catch {
     return res.sendStatus(401);
   }

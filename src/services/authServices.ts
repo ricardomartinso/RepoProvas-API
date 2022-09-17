@@ -14,14 +14,16 @@ export async function createUser(user: AuthUser) {
   await create(encryptedUser);
 }
 export async function loginUser(user: AuthUser) {
-  const userInfo = await findByEmail(user.email);
+  const userData = await findByEmail(user.email);
 
-  if (!userInfo)
+  if (!userData)
     throw { type: "Unauthorized", message: "Invalid email or password" };
 
-  verifyValidPassword(user.password, userInfo.password as string);
+  verifyValidPassword(user.password, userData.password as string);
 
-  return jwt.sign(user, process.env.SECRET_KEY as string);
+  const token = jwt.sign({ userData }, process.env.SECRET_KEY as string);
+  console.log(jwt.verify(token, process.env.SECRET_KEY as string));
+  return token;
 }
 
 async function verifyEmailCreation(email: string) {
