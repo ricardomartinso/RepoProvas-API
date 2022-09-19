@@ -5,9 +5,9 @@ import { AuthUser } from "../types/authTypes";
 export async function signUp(req: Request, res: Response) {
   const { email, password }: AuthUser = req.body;
 
-  await createUser({ email, password });
+  const user = await createUser({ email, password });
 
-  return res.status(201).send("Created");
+  return res.status(201).send(user);
 }
 
 export async function login(req: Request, res: Response) {

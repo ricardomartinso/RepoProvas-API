@@ -12,6 +12,8 @@ export async function createUser(user: AuthUser) {
   };
 
   await create(encryptedUser);
+
+  return user;
 }
 export async function loginUser(user: AuthUser) {
   const userData = await findByEmail(user.email);
