@@ -1,8 +1,10 @@
 import { findById } from "../repositories/authRepository";
+import { findCategoryId } from "../repositories/categoryRepository";
+import { findTeachersDisciplineId } from "../repositories/teachersDisciplinesRepository";
 import {
   create,
-  findCategoryId,
-  findTeachersDisciplineId,
+  findTestsByDiscipline,
+  findTestsByTeachers,
 } from "../repositories/testsRepository";
 import { CreateTest } from "../types/testTypes";
 
@@ -15,4 +17,12 @@ export async function createTest(test: CreateTest, userId: number) {
   const createdTest = await create(test);
 
   return createdTest;
+}
+
+export async function getTestsByDiscipline(userId: number) {
+  return await findTestsByDiscipline();
+}
+
+export async function getTestsByTeachers() {
+  return await findTestsByTeachers();
 }

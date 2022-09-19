@@ -22,23 +22,59 @@ export async function findById(testId: number) {
   return test;
 }
 
-export async function findCategoryId(categoryId: number) {
-  const category = await prisma.category.findUnique({
-    where: { id: categoryId },
+export async function findTestsByDiscipline() {
+  const tests = await prisma.term.findMany({
+    where: {},
+    distinct: ["number"],
+    select: {
+      number: true,
+      disciplines: {
+        distinct: ["name"],
+        select: {
+          name: true,
+          teacherDisciplines: {
+            select: {
+              teacher: { select: { name: true } },
+              tests: {
+                select: {
+                  name: true,
+                  pdfUrl: true,
+                  category: {
+                    select: {
+                      name: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
-  if (!category) throw { type: "NotFound", message: "Category doesn't exist" };
-
-  return category;
+  return tests;
 }
 
-export async function findTeachersDisciplineId(teachersDisciplineId: number) {
-  const teacherDiscipline = await prisma.teacherDiscipline.findUnique({
-    where: { id: teachersDisciplineId },
+export async function findTestsByTeachers() {
+  return await prisma.teacher.findMany({
+    where: {},
+    distinct: ["name"],
+    select: {
+      name: true,
+      teacherDisciplines: {
+        select: {
+          discipline: { select: { name: true } },
+          tests: {
+            select: {
+              name: true,
+              pdfUrl: true,
+              category: { select: { name: true } },
+            },
+            orderBy: { categoryId: "desc" },
+          },
+        },
+      },
+    },
   });
-
-  if (!teacherDiscipline)
-    throw { type: "NotFound", message: "Teacher Discipline doesn't exist" };
-
-  return teacherDiscipline;
 }
