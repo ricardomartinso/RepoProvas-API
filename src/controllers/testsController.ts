@@ -12,18 +12,13 @@ export async function testsCreate(req: Request, res: Response) {
 }
 
 export async function getTestsByDiscipline(req: Request, res: Response) {
-  const userId: number = res.locals.userData.id;
-
-  const tests = await testsService.getTestsByDiscipline(userId);
+  const tests = await testsService.getTestsByDiscipline();
 
   res.status(200).send(tests);
 }
 
 export async function getTestsByTeachers(req: Request, res: Response) {
-  const userId: number = res.locals.userData.id;
-
   const tests = await testsService.getTestsByTeachers();
-  console.log(tests);
 
   res.status(200).send(tests);
 }

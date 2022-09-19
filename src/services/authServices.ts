@@ -24,7 +24,6 @@ export async function loginUser(user: AuthUser) {
   verifyValidPassword(user.password, userData.password as string);
 
   const token = jwt.sign({ userData }, process.env.SECRET_KEY as string);
-  console.log(jwt.verify(token, process.env.SECRET_KEY as string));
   return token;
 }
 

@@ -19,7 +19,7 @@ export async function createTest(test: CreateTest, userId: number) {
   return createdTest;
 }
 
-export async function getTestsByDiscipline(userId: number) {
+export async function getTestsByDiscipline() {
   return await findTestsByDiscipline();
 }
 
